@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="11" time="0.068" timestamp="2024-05-09T12:43:34.144762" hostname="MATTEO-PC21"><testcase classname="tests.test_math.TestMath" name="test_add[1-2-3]" time="0.001" /><testcase classname="tests.test_math.TestMath" name="test_add[-1-0--1]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_sub[1-2--1]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_sub[-1-0--1]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_mul[1-2-2]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_mul[-1-0-0]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_mul[-1-6--6]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_div[1-2-0]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_div[10-2-5]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_div[11-2-5]" time="0.000" /><testcase classname="tests.test_math.TestMath" name="test_div[3-0-3]" time="0.001"><failure message="ZeroDivisionError: integer division or modulo by zero">self = &lt;tests.test_math.TestMath object at 0x000001A427DDFEF0&gt;, x = 3, y = 0, result = 3
+
+    @pytest.mark.parametrize(
+        "x, y, result", [(1, 2, 0), (10, 2, 5), (11, 2, 5), (3, 0, 3)]
+    )
+    def test_div(self, x, y, result) -&gt; None:
+&gt;       assert math.div(x, y) == result
+
+tests\test_math.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+x = 3, y = 0
+
+    def div(x: int, y: int) -&gt; int:
+&gt;       return x // y
+E       ZeroDivisionError: integer division or modulo by zero
+
+src\math\math.py:14: ZeroDivisionError</failure></testcase></testsuite></testsuites>
