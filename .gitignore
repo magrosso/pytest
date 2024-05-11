@@ -2,7 +2,7 @@
 .mypy_cache
 .pytest_cache
 env/
-
+logs/
 report.html
 src/math/__pycache__/*
 tests/__pycache__/*
