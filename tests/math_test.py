@@ -1,13 +1,19 @@
 from typing import NamedTuple
+
+# import pytest_check as check
 from src.math import math
 import pytest
 import sys
+import time
+
 
 xfail = pytest.mark.xfail
+
 
 # skip the whole test suite for
 # Python versions less than 3.12 or
 # Non Windows OS
+
 pytestmark = [
     pytest.mark.skipif(
         condition=not sys.platform.startswith("win"),
@@ -19,14 +25,12 @@ pytestmark = [
 ]
 
 
-@pytest.mark.parametrize("x, y, result", [(1, 2, 3), (-1, 0, -1), (123, -1, 123)])
+@pytest.mark.parametrize("x, y, result", [(1, 2, 3), (-1, 0, -1), (123, -1, 122)])
 def test_addition(x, y, result) -> None:
-    # logger.warning(f"{__name__}.add({x=} + {y=})")
     assert math.add(x, y) == result
     assert math.add(y, x) == result
 
 
-# @pytest.mark.usefixtures("setup_teardown")
 @pytest.mark.parametrize("x, y, result", [(1, 2, -1), (-1, 0, -1)])
 def test_subtraction(x, y, result) -> None:
     assert math.sub(x, y) == result
@@ -39,24 +43,32 @@ def test_subtraction(x, y, result) -> None:
 )
 def test_multiplication(x, y, result) -> None:
     assert math.mul(x, y) == result
+    # time.sleep(0.9)
     assert math.mul(y, x) == result
 
 
-@pytest.mark.parametrize("x, y, result", [(1, 2, 0), (10, 2, 5), (11, 2, 5), (3, 1, 3)])
+division_test_data = [(1, 2, 0), (10, 2, 5), (11, 2, 5), (3, 1, 3), (1002, 2, 501)]
+
+
+@pytest.mark.parametrize("x, y, result", division_test_data)
 def test_division(x, y, result) -> None:
     assert math.div(x, y) == result
 
 
 @pytest.mark.parametrize(
-    "x, y", [(1, 0), (10, 0), (-11, 0), pytest.param(3, 0, id="divide by zero")]
+    "x, y",
+    [(1, 0), (10, 0), (-11, 0), pytest.param(3, 0, id="divide by zero")],
 )
 def test_division_fail(x, y) -> None:
-    with pytest.raises(ZeroDivisionError):
+    with pytest.raises(ValueError) as exc_info:
         assert math.div(x, y)
+    (msg,) = exc_info.value.args
+    assert msg.startswith("Cannot divide by zero")
 
 
 class Input(NamedTuple):
     input: int
+
     expected: int
 
 
@@ -77,6 +89,8 @@ def test_square(x, expected) -> None:
 
 
 # skips test execution - not recommended, better use xfail
+
+
 @pytest.mark.skip(reason="broken test")
 def test_skipped(): ...
 
@@ -88,6 +102,8 @@ def test_skipped_conditionally(): ...
 
 
 # test expected to fail that failed - result indicated by small 'x' or XFAIL in verbose mode
+
+
 @xfail
 def test_expected_to_fail_failed():
     assert False
@@ -95,6 +111,8 @@ def test_expected_to_fail_failed():
 
 # test expected to fail that unexpectedly succeeded - result indicated by capital 'X' or XPASS in verbose mode
 # by default this condition will not fail the overall test result
+
+
 @xfail
 def test_expected_to_fail_but_passing():
     assert True
@@ -108,3 +126,10 @@ def test_expected_to_fail_but_passing_fail():
 @xfail(strict=True)
 def test_expected_to_fail_but_passing_fail_condition():
     assert True
+
+
+def test_check_multiple_assertions(check):
+    for num in {40, 77, 11, 23, 709}:
+        with check:
+            assert num > 10
+    assert False

@@ -4,26 +4,31 @@ logger = logging.getLogger(name=__name__)
 logger.level = logging.DEBUG  # log all levels!
 
 
+class MathError(ValueError): ...
+
+
 def add(x: int, y: int) -> int:
-    logger.info(f"add({x}, {y})")
+    logger.debug(f"({x=}, {y=})")
     return x + y
 
 
 def sub(x: int, y: int) -> int:
-    logger.info(f"sub({x}, {y})")
+    logger.debug(f"{x}, {y}")
     return x - y
 
 
 def mul(x: int, y: int) -> int:
-    logger.info(f"mul({x}, {y})")
+    logger.debug(f"({x}, {y})")
     return x * y
 
 
 def div(x: int, y: int) -> int:
-    logger.info(f"div({x}, {y})")
+    logger.debug(f"({x}, {y})")
+    if y == 0:
+        raise MathError("Cannot divide by zero!")
     return x // y
 
 
 def square(x: int) -> int:
-    logger.info(f"add({x}^2")
+    logger.debug(f"({x}^2)")
     return x**2

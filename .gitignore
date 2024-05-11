@@ -1,5 +1,8 @@
+*.pyc
 .mypy_cache
 .pytest_cache
 env/
-__pycache__
+
 report.html
+src/math/__pycache__/*
+tests/__pycache__/*
