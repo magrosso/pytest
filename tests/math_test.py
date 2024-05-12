@@ -5,6 +5,7 @@ from src.math import math
 import pytest
 import sys
 import time
+from . import gen_data
 
 
 xfail = pytest.mark.xfail
@@ -18,9 +19,6 @@ pytestmark = [
     pytest.mark.skipif(
         condition=not sys.platform.startswith("win"),
         reason="Windows-only tests",
-    ),
-    pytest.mark.skipif(
-        condition=sys.version_info < (3, 12), reason="Requires python 3.12"
     ),
 ]
 
@@ -38,12 +36,20 @@ def test_subtraction(x, y, result) -> None:
 
 
 @pytest.mark.parametrize(
+    "x",
+    range(0, 13, 1),
+)
+def test_multiplication_by_zero(x) -> None:
+    assert math.mul(x, 0) == 0
+    assert math.mul(0, x) == 0
+
+
+@pytest.mark.parametrize(
     "x, y, result",
     [(1, 2, 2), pytest.param(-1, 0, 0, id="multiply by zero"), (-1, 6, -6)],
 )
 def test_multiplication(x, y, result) -> None:
     assert math.mul(x, y) == result
-    # time.sleep(0.9)
     assert math.mul(y, x) == result
 
 
@@ -133,3 +139,15 @@ def test_check_multiple_assertions(check):
         with check:
             assert num > 10
     assert False
+
+
+@pytest.mark.parametrize("x", (x for x in range(-13, 23, 1)))
+# @pytest.mark.parametrize("x", gen_data.generate_even_numbers(1, 21))
+def test_increment(x) -> None:
+    assert math.increment(x) == x + 1
+
+
+@pytest.mark.parametrize("x", (x for x in range(-13, 23, 1)))
+# @pytest.mark.parametrize("x", gen_data.generate_even_numbers(1, 21))
+def test_decrement(x) -> None:
+    assert math.decrement(x) == x - 1

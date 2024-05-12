@@ -4,5 +4,5 @@
 env/
 logs/
 report.html
-src/math/__pycache__/*
-tests/__pycache__/*
+src/math/__pycache__/
+tests/__pycache__/

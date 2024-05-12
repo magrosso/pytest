@@ -32,3 +32,11 @@ def div(x: int, y: int) -> int:
 def square(x: int) -> int:
     logger.debug(f"({x}^2)")
     return x**2
+
+
+def increment(x: int) -> int:
+    return x + 1
+
+
+def decrement(x: int) -> int:
+    return x - 1
